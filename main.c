@@ -1,6 +1,6 @@
-#import <stdio.h>
-#import "wav.h"
-#import "file.h"
+#include <stdio.h>
+#include "wav.h"
+#include "file.h"
 
 
 int main (int argc, char** argv){
@@ -13,13 +13,13 @@ int main (int argc, char** argv){
 
 	size = read_file(argv[1], buffer);
 	
-	if (size == NULL){
+	if (size == 0){
 		//report error, how?
 		return -1;
 	}
 
 	wav_file wav;
-	wav = parse(*buffer);
+	wav = *parse(*buffer);
 
 	//print some file stats
 	
