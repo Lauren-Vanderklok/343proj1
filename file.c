@@ -6,9 +6,12 @@ size_t read_file (char* filename, char** buffer){
 	//read fie
 	//size t is bytes
 	FILE* file;
-	char* fgetsReturn;
-	char* first44;
-	size_t dataSize;
+	//char* fgetsReturn;
+	//char* first44;
+	unsigned int dataSize;
+	unsigned char riff[4];
+	unsigned char buff4[4];
+	int numRead;
 
 	file = fopen(filename, "r");
 
@@ -16,29 +19,39 @@ size_t read_file (char* filename, char** buffer){
 		return (size_t) 0;
 	}
 
-	first44 = malloc(67); //need extra byte because fgets puts a null char at end?????
+	//first44 = malloc(sizeof(char)*67); //need extra byte because fgets puts a null char at end?????
+	//fgetsReturn = fgets(first44, 67, file); //add extra byte for null char
 
-	fgetsReturn = fgets(first44, 67, file); //add extra byte for null char
+	numRead = fread(riff, sizeof(riff), 1, file);
+	numRead = numRead + fread(buff4, sizeof(buff4), 1, file);
+	dataSize = buff4[0] | (buff4[1]<<8) | (buff4[2]<<16) | (buff4[3]<<24);
 
-	if (fgetsReturn == NULL){
+	if (numRead != 2){
 		return (size_t) 0;
 	}
-	printf("all: %s\n", first44);
-	printf("should read data: %c%c%c%c\n", *(&first44 + 36), *(&first44 + 37), *(&first44 + 38), *(&first44 + 39)); //test
-	unsigned int testsize;
-	testsize = *(&first44 + 40);
-	printf("size of data: %i\n", testsize);
-	dataSize = (size_t) (*(&first44 + 41) + 44); //honestly not sure if i should use 41 or 40 here
+
+	printf("%s\n", riff);
+	printf("%lu\n", dataSize);
+
+
+	//printf("all: %s\n", first44);
+	//printf("should read data: %c%c%c%c\n", *(&first44 + 36), *(&first44 + 37), *(&first44 + 38), *(&first44 + 39)); //test
+	//unsigned int testsize;
+	//testsize = (unsigned int)  *(&first44 + 40);
+	//printf("size of data: %i\n", testsize);
+	//dataSize = (size_t) (*(&first44 + 41) + 44); //honestly not sure if i should use 41 or 40 here
 	
 	*buffer = malloc(dataSize);
 
-	fgetsReturn = fgets(*buffer, ((int) dataSize) + 1, file);
+	numRead = numRead + fread(*buffer, (size_t) dataSize, 1, file);
 
-	if (fgetsReturn == NULL){
+	//fgetsReturn = fgets(*buffer, ((int) dataSize) + 1, file);
+
+	if (numRead != 3){
 		return (size_t)  0;
 	}
 
-	return dataSize;
+	return (size_t) dataSize;
 
 }
 

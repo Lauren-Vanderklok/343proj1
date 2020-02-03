@@ -2,14 +2,16 @@
 //include guards
 
 typedef struct wav_file{
-	short format; //says FormatType bytes 20-21
-	int formatLength;//says its the length of the format section bytes 16-19
-	int fileSize; //not just the size of the data
-	short numChannels;
-	int sampleRate;
-	int byteRate;
-	short blockAlignment;
-	short bitSampleRate;
+	unsigned char wave[4]; //8-11
+	unsigned char fmt[4]; //12-15 with last as null
+	unsigned int fmtlen; //16-19
+	unsigned short numChannels; //22-23
+	unsigned int sampleRate; //24-27
+	unsigned int byteRate; //28-31
+	unsigned short blockAlignment; //32-33
+	unsigned short bitSampleRate; //34-35
+	unsigned char data[4]; //36-39
+	unsigned int audioSize; //40-43
 	char* content;
 }wav_file;
 

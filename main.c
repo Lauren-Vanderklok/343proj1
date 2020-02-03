@@ -22,6 +22,15 @@ int main (int argc, char** argv){
 	wav = *parse(*buffer);
 
 	//print some file stats
+	printf("File: %s\n", argv[1]);
+	printf("=====================================\n");
+	printf("File size is %i bytes. Read %lu bytes\n", (int) size, wav.audioSize+44);
+        printf("Format is \"%s\" with format data length %lu.\n", wav.fmt, wav.fmtlen);
+	printf("Format type is %sfmt\n", wav.wave);
+	printf("%hu channel(s) with a sample rate of %lu.\n", wav.numChannels, wav.sampleRate);
+	printf("%lu byte rate, %hu alignment, %hu bits per sample.\n", wav.byteRate, wav.blockAlignment, wav.bitSampleRate);
+	printf("Data is \"%s\" and data size is %lu bytes.\n", wav.data, wav. audioSize);
+	printf("=====================================\n");
 	
 	char* reversebuffer;
 	//reverse buffer into reverse buffer
