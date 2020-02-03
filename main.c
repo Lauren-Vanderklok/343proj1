@@ -18,6 +18,8 @@ int main (int argc, char** argv){
 		return -1;
 	}
 
+	printf("Wave: %c\n", *buffer);
+
 	wav_file wav;
 	wav = *parse(*buffer);
 
