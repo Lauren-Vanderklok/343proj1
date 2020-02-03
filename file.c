@@ -4,14 +4,13 @@
 
 size_t read_file (char* filename, char** buffer){
 	//read fie
-	//size t is bytes
 	FILE* file;
-	//char* fgetsReturn;
-	//char* first44;
 	unsigned int dataSize;
 	unsigned char riff[4];
 	unsigned char buff4[4];
 	int numRead;
+//	char* innerbuffer;
+//	innerbuffer = *buffer;
 
 	file = fopen(filename, "r");
 
@@ -29,23 +28,30 @@ size_t read_file (char* filename, char** buffer){
 	if (numRead != 2){
 		return (size_t) 0;
 	}
-	printf("what?");
-	//printf("%s\n", riff);
-	//printf("%lu\n", dataSize);
-	printf("hello???????");
-	printf("before mallocing *buffer?");
+	//printf("what?");
+	printf("%s\n", riff);
+	printf("%lu\n", dataSize);
+	//printf("hello???????");
+	//printf("before mallocing *buffer?");
+
 	*buffer = malloc(dataSize);
-	printf("before fread");
+
+	//printf("before fread");
+
 	numRead = numRead + fread(*buffer, (size_t) dataSize, 1, file);
-	printf("right before im trying to access first value");
-	char w = **buffer;
-	printf("file: %c\n", w);
+
+	//printf("right before im trying to access first value\n");
+//	char w = *innerbuffer;
+//	printf("innerbuffer: %c\n", w);
+	char w2 = **buffer;
+	printf("buffer: %c\n", w2);
+
 	//fgetsReturn = fgets(*buffer, ((int) dataSize) + 1, file);
 
 	if (numRead != 3){
 		return (size_t)  0;
 	}
-
+	printf("readfile is about to return\n");
 	return (size_t) dataSize;
 
 }
