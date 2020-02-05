@@ -4,29 +4,28 @@
 #include <stdlib.h>
 
 int main (int argc, char** argv){
-	//remember that the first string is the name of the program
-	//second is the name of the file and third is the file your reversing to
-	//size_t is a number of bytes
+	//argv[1] is the name of the file to reverse and argv[2] is the file your reversing to
 	
+	//raw data from the .wav file, stored in heap
 	char* buffer;
+
+	//size of buffer in bytes
 	size_t size;
 
+	//pointer to struct to hold .wav audio and header info
+	wav_file* wav;
+
+	//holds reversed audio from buffer, header info is the same
+	char* reversebuffer;
+
 	size = read_file(argv[1], &buffer);
-	printf("readfile exited\n");
 
 	if (size == 0){
 		//report error
-		printf("readfile failed");
 		return -1;
 	}
 
-	//char w = **buffer;
-	printf("*buffer: %c\n", *buffer);
-
-	wav_file* wav;
 	wav = parse(buffer);
-
-	//printf("change went thourgh");
 
 	//print some file stats
 	printf("File: %s\n", argv[1]);
@@ -39,15 +38,13 @@ int main (int argc, char** argv){
 	printf("Data is \"%s\" and data size is %u bytes.\n", wav->data, wav->audioSize);
 	printf("=====================================\n");
 	
-	//reverse file
-	char* reversebuffer;
+	//allocate same amount of memory as buffer
 	reversebuffer = malloc(sizeof(char) * size);
 	
 	//copy header info into reverse
 	for(int i=0; i<44; i++){
 		*(reversebuffer+i) = *(buffer+i);
 	}
-
 
 	//actual reversing
 	for(int i=size; i>44; i=i-2){

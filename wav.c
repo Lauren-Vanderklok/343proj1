@@ -2,15 +2,18 @@
 #include <stdlib.h>
 #include "wav.h"
 
+/*
+ * reads .wav data from *contents into wav_file construct
+ */
 wav_file* parse(char* contents){
-	//do things? return wav_file
+	//wav_file pointer to be returned
 	wav_file* wav;
+
 	wav = malloc(sizeof(wav_file));
 	wav->wave[0] = *(contents+8);
 	wav->wave[1] = *(contents+9);
 	wav->wave[2] = *(contents+10);
 	wav->wave[3] = *(contents+11);
-	printf("wave: %s\n", wav->wave);
 	wav->fmt[0] = *(contents+12);
 	wav->fmt[1] = *(contents+13);
 	wav->fmt[2] = *(contents+14);
@@ -31,12 +34,10 @@ wav_file* parse(char* contents){
 	wav->audioSize = *(contents+40) | (*(contents+41)<<8) | (*(contents+42)<<16) | (*(contents+43)<<24);
 	//printf("audioSize: %lu, %u, %i\n", wav->audioSize, wav->audioSize, wav->audioSize);
 	//printf("audioSize: 24,8,8,24 endian(now +): %u\n", ((*(contents+32)<<24) + (*(contents+33)<<8) + (*(contents+34)>>8) + (*(contents+35)>>24)));
-	//printf("audioSIze: 24, 8, 8, 24, endian (+) reversed byte order; %u\n", ((*(contents+35)<<24) + (*(contents+34) << 8) + (*(contents+33)>>8) + (*(contents+32)>>24)));
-	//printf("audiosize: not adjusted for endianess: %u\n", (*(contents+32) | *(contents+33) | *(contents+34) | *(contents+35)));
 	//printf("audiosize 0,8,16,24 endian adjust: %u\n", (*(contents+32) | (*(contents+33)<<8) | (*(contents+34)<<16) | (*(contents+35)<<24)));
-	//printf("audiosize byteswap1(passing single address: %u \n", ByteSwap1((long) *contents+32));
+	
 
-	wav->content = (contents+44); // there may be 8 extra bytes at the end of this //no longer!
+	wav->content = (contents+44);
 	return wav;
 }
 
