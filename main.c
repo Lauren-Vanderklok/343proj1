@@ -84,7 +84,7 @@ int main (int argc, char** argv){
 	}	       
 	free(buffer);
 	free(reversebuffer);
-	free(wav);
+	//free(wav);
 	return 0;
 }
 
