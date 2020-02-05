@@ -16,11 +16,12 @@ int main (int argc, char** argv){
 
 	if (size == 0){
 		//report error
+		printf("readfile failed");
 		return -1;
 	}
 
 	//char w = **buffer;
-	//printf("**buffer: %c\n", w);
+	printf("*buffer: %c\n", *buffer);
 
 	wav_file* wav;
 	wav = parse(buffer);
@@ -56,7 +57,25 @@ int main (int argc, char** argv){
 
 		j=j+(wav->bitSampleRate/8);
 	}
-
+	
+	printf("first 10 bytes in buffer: ");
+	for (int i=44; i<54; i++){
+		printf("%u ", *(buffer+i));
+	}
+	printf("\nlast 10 bytes in buffer: ");
+	for (int i=(size-10); i<size; i++){
+		printf("%u ", *(buffer+i));
+	}
+	printf("\n first 10 bytes in reversebuffer: ");
+	for (int i=44; i<54; i++){
+		printf("%u ", *(buffer+i));
+	}
+	printf("\nlast 10 bytes in reversebuffer: ");
+	for (int i=(size-10); i<size; i++){
+		printf("%u ", *(reversebuffer+i));
+	}
+	printf("\n");
+	
 
 	size = write_file(argv[2], reversebuffer, size);
 
