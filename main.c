@@ -32,7 +32,7 @@ int main (int argc, char** argv){
 	printf("File: %s\n", argv[1]);
 	printf("=====================================\n");
 	printf("File size is %i bytes. Read %i bytes\n", (int) size,(int) (size-44));
-        printf("Format is \"%s\" with format data length %lu.\n", wav->fmt, wav->fmtlen);
+        printf("Format is \"%s\" with format data length %u.\n", wav->fmt, wav->fmtlen);
 	printf("Format type is %sfmt\n", wav->wave);
 	printf("%hu channel(s) with a sample rate of %u.\n", wav->numChannels, wav->sampleRate);
 	printf("%u byte rate, %hu alignment, %hu bits per sample.\n", wav->byteRate, wav->blockAlignment, wav->bitSampleRate);
@@ -47,16 +47,18 @@ int main (int argc, char** argv){
 	for(int i=0; i<44; i++){
 		*(reversebuffer+i) = *(buffer+i);
 	}
+
+
 	//actual reversing
-	for(int i=size; i>44; i=i-(wav->bitSampleRate/8)){
+	for(int i=size; i>44; i=i-2){
 		//i tracks position in buffer
-		int j=44; //j tracks position in reversebuffer
-
-		*(reversebuffer+j) = *(buffer+(i-1));
-		*(reversebuffer+(j+1)) = *(buffer+i);
-
-		j=j+(wav->bitSampleRate/8);
+		int j = 44; // j tracks position in reversebuffer
+		*(reversebuffer+j) = *(buffer+i-1);
+		*(reversebuffer+j+1) = *(buffer+i);
+		j = j+2;
 	}
+	
+	
 	
 	printf("first 10 bytes in buffer: ");
 	for (int i=44; i<54; i++){
@@ -68,7 +70,7 @@ int main (int argc, char** argv){
 	}
 	printf("\n first 10 bytes in reversebuffer: ");
 	for (int i=44; i<54; i++){
-		printf("%u ", *(buffer+i));
+		printf("%u ", *(reversebuffer+i));
 	}
 	printf("\nlast 10 bytes in reversebuffer: ");
 	for (int i=(size-10); i<size; i++){
