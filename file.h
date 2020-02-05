@@ -1,4 +1,4 @@
-#import <stdio.h>
+#include <stdio.h>
 
 size_t read_file (char* filename, char** buffer);
 
