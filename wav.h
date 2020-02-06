@@ -2,6 +2,10 @@
 //include guards
 
 typedef struct wav_file{
+
+	unsigned char riff[4]; //bytes: 0-3
+	unsigned int totalSize; //bytes: 4-7
+
 	//"WAVE" format string
 	unsigned char wave[4]; // bytes: 8-11
 
@@ -10,6 +14,8 @@ typedef struct wav_file{
 
 	//Length of format section
 	unsigned int fmtlen; //bytes: 16-19
+
+	unsigned short fmtType; //bytes 20-21
 
 	//Number of audio channels 
 	unsigned short numChannels; //bytes: 22-23
@@ -30,7 +36,7 @@ typedef struct wav_file{
 	unsigned char data[4]; //bytes: 36-39
 
 	//size of audio data in bytes
-	unsigned int audioSize; //bytes: 40-43
+	int audioSize; //bytes: 40-43
 	
 	//pointer to audio data
 	char* content;
