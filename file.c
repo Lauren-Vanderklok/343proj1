@@ -40,12 +40,14 @@ size_t read_file (char* filename, char** buffer){
 	if (numRead != 1){
 		printf("errno code: %d\n", errno);
 		perror("message");
+		fprintf(stderr, "file not read into memory");
 		return (size_t)  0;
 	}
 
 	if (fclose(file) == EOF){
 		printf("errno code: %d\n", errno);
 		perror("message");
+		fprintf(stderr, "file not closed");
 		return (size_t) 0;
 	}
 
@@ -68,6 +70,7 @@ size_t write_file (char* filename, char* buffer, size_t size){
 	if (file == NULL){
 		printf("errno code: %d\n", errno);
 		perror("message");
+		fprintf(stderr, "file not opened");
 		return (size_t) 0;
 	}
 
@@ -76,6 +79,7 @@ size_t write_file (char* filename, char* buffer, size_t size){
 	if (fclose(file) == EOF){
 		printf("errno code: %d\n", errno);
 		perror("message");
+		fprintf(stderr, "file not closed");
 		return (size_t) 0;
 	}
 

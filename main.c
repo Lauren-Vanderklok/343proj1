@@ -19,6 +19,7 @@ int main (int argc, char** argv){
 
 	if (size == 0){
 		//report error
+		fprintf(stderr, "read_file failed");
 		printf("read_file failed\n");
 		return -1;
 	}
@@ -46,19 +47,45 @@ int main (int argc, char** argv){
 		printf("%u ", *(buffer+i));
 	}
 	printf("\n///////////////////////////////////////");
+	
 
-	char temp[2];
+	//long start = 44;
+	//long end = size;
+	
+	//int bytesPerSample = wav->bitSampleRate;
 
-	for(int i=44; i<((size-44)/2); i=i+2){
+	//while (start < end){
+	//	char temp = buffer[start];
+	//	buffer[start] = buffer[end-1];
+	//	buffer[end-1] = temp;
+	//	temp = buffer[start+1];
+	//	buffer[start+1] = buffer[end];
+	//	buffer[end] = temp;
+	//	start += bytesPerSample;
+	//	end -= bytesPerSample;
+	//}
+
+
+
+
+
+
+	char temp;
+
+	for(int i=44; i<((size-44)/2); i++){
 		int j = size;
-		temp[0] = *(buffer+i);
-		temp[1] = *(buffer+i+1);
-		*(buffer+i) = *(buffer+j-1);
-		*(buffer+i+1) = *(buffer+j);
-		*(buffer+j-1) = temp[0];
-		*(buffer+j) = temp[1];
-		j=j-2;
+		temp = buffer[i];
+		buffer[i] = buffer[j];
+		buffer[j] = temp;
+		j--;
 	}
+
+	for(int i=44; i<size; i=i+2){
+		temp = buffer[i];
+		buffer[i] = buffer[i+1];
+		buffer[i+1] = temp;
+	}
+
 
 	printf("\nfirst 10 bytes in buffer: ");
 	for (int i=44; i<54; i++){
@@ -71,10 +98,19 @@ int main (int argc, char** argv){
 
 	printf("\n");	
 
+
+	//	temp[0] = *(buffer+i);
+	//	temp[1] = *(buffer+i+1);
+	//	*(buffer+i) = *(buffer+j-1);
+	//	*(buffer+i+1) = *(buffer+j);
+	//	*(buffer+j-1) = temp[0];
+	//	*(buffer+j) = temp[1];
+
 	size = write_file(argv[2], buffer, size);
 
 	if (size == 0){
 	       //report error
+	       fprintf(stderr, "write_file failed");
 	       printf("write_file failed");
 	       return -1;
 	}	       
