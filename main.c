@@ -15,9 +15,6 @@ int main (int argc, char** argv){
 	//pointer to struct to hold .wav audio and header info
 	wav_file* wav;
 
-	//holds reversed audio from buffer, header info is the same
-	//char* reversebuffer;
-
 	size = read_file(argv[1], &buffer);
 
 	if (size == 0){
@@ -39,22 +36,6 @@ int main (int argc, char** argv){
 	printf("Data is \"%s\" and data size is %u bytes.\n", wav->data, wav->audioSize);
 	printf("=====================================\n");
 	
-	//allocate same amount of memory as buffer
-	//reversebuffer = malloc(sizeof(char) * size);
-	
-	//copy header info into reverse
-	//for(int i=0; i<44; i++){
-	//	*(reversebuffer+i) = *(buffer+i);
-	//}
-
-	//actual reversing
-	//for(int i=size; i>44; i=i-2){
-		//i tracks position in buffer
-	//	int j = 44; // j tracks position in reversebuffer
-	//	*(reversebuffer+j) = *(buffer+i-1);
-	//	*(reversebuffer+j+1) = *(buffer+i);
-	//	j = j+2;
-	//}
 	printf("first 10 bytes in buffer: ");
 	for (int i=44; i<54; i++){
 		printf("%u ", *(buffer+i));
@@ -87,16 +68,8 @@ int main (int argc, char** argv){
 	for (int i=(size-10); i<size; i++){
 		printf("%u ", *(buffer+i));
 	}
-	//printf("\n first 10 bytes in reversebuffer: ");
-	//for (int i=44; i<54; i++){
-	//	printf("%u ", *(reversebuffer+i));
-	//}
-	//printf("\nlast 10 bytes in reversebuffer: ");
-	//for (int i=(size-10); i<size; i++){
-	//	printf("%u ", *(reversebuffer+i));
-	//}
-	printf("\n");
-	
+
+	printf("\n");	
 
 	size = write_file(argv[2], buffer, size);
 
@@ -106,8 +79,6 @@ int main (int argc, char** argv){
 	       return -1;
 	}	       
 	free(buffer);
-	//free(reversebuffer);
-	//free(wav);
 	return 0;
 }
 

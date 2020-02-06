@@ -2,8 +2,11 @@
 //include guards
 
 typedef struct wav_file{
-
+	
+	//holds "RIFF" header
 	unsigned char riff[4]; //bytes: 0-3
+
+	//size of the whole file, includeing header
 	unsigned int totalSize; //bytes: 4-7
 
 	//"WAVE" format string
@@ -15,6 +18,7 @@ typedef struct wav_file{
 	//Length of format section
 	unsigned int fmtlen; //bytes: 16-19
 
+	//type of fmt block
 	unsigned short fmtType; //bytes 20-21
 
 	//Number of audio channels 
