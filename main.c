@@ -37,37 +37,6 @@ int main (int argc, char** argv){
 	printf("Data is \"%s\" and data size is %u bytes.\n", wav->data, wav->audioSize);
 	printf("=====================================\n");
 	
-	printf("first 10 bytes in buffer: ");
-	for (int i=44; i<54; i++){
-		printf("%u ", *(buffer+i));
-	}
-	printf("\n");
-	printf("last 10 bytes in buffer: ");
-	for (int i=(size-10); i<size; i++){
-		printf("%u ", *(buffer+i));
-	}
-	printf("\n///////////////////////////////////////");
-	
-
-	//long start = 44;
-	//long end = size;
-	
-	//int bytesPerSample = wav->bitSampleRate;
-
-	//while (start < end){
-	//	char temp = buffer[start];
-	//	buffer[start] = buffer[end-1];
-	//	buffer[end-1] = temp;
-	//	temp = buffer[start+1];
-	//	buffer[start+1] = buffer[end];
-	//	buffer[end] = temp;
-	//	start += bytesPerSample;
-	//	end -= bytesPerSample;
-	//}
-
-
-
-
 
 
 	char temp;
@@ -87,24 +56,7 @@ int main (int argc, char** argv){
 	}
 
 
-	printf("\nfirst 10 bytes in buffer: ");
-	for (int i=44; i<54; i++){
-		printf("%u ", *(buffer+i));
-	}
-	printf("\nlast 10 bytes in buffer: ");
-	for (int i=(size-10); i<size; i++){
-		printf("%u ", *(buffer+i));
-	}
 
-	printf("\n");	
-
-
-	//	temp[0] = *(buffer+i);
-	//	temp[1] = *(buffer+i+1);
-	//	*(buffer+i) = *(buffer+j-1);
-	//	*(buffer+i+1) = *(buffer+j);
-	//	*(buffer+j-1) = temp[0];
-	//	*(buffer+j) = temp[1];
 
 	size = write_file(argv[2], buffer, size);
 
